@@ -2,6 +2,7 @@ from PIL import Image
 import sys
 import os
 def main():
+    margin = 50
     testMode = False
     if len(sys.argv) == 2:
         if sys.argv[1] == "-t":
@@ -30,7 +31,6 @@ def main():
         return
     os.makedirs(outputDirectory, exist_ok=True)
     #change margin for tighter or more relaxed qualifying pixels
-    margin = 25
     for imgName in fileNames:
         img = Image.open(inputDirectory + imgName + ".png")
         width, height = img.size
