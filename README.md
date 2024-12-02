@@ -11,7 +11,7 @@
 1. testing images are included in the "testing" directory
 2. run the same command with "-t" at the end to run in "test mode"
 3. ```python3 image_crop.py -t```
-4. this will generate the cropped images and place them in the 
+4. this will generate the cropped images and place them in the "output" directory.
 
 # Notes:
 1. "margin" is set to 30 by default, change this to adjust the qualifying margin. The qualifying margin determines how far away from red (RGB = 255, 0, 0) a qualifying pixel can be.
