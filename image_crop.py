@@ -17,11 +17,12 @@ def removeBackground(image: Image, dim):
             if currentPixelRed != prevPixelRed or (currentPixelRed and x == width - 1):
                 redBorders.append(x) #new border found
             prevPixelRed = currentPixelRed
-        print("redborders: " + str(redBorders))
+        #print("redborders: " + str(redBorders))
         for i in range(redBorders[0]):
             pixels[i, y] = backgroundColor
         for i in range(redBorders[-1], width):
-            pixels[i, y] = backgroundColor
+            if redBorders[-1] != width -1: #ignore trimming the last index
+                pixels[i, y] = backgroundColor
     return image
 def main():
     testMode = False
@@ -55,7 +56,7 @@ def main():
     #change margin for tighter or more relaxed qualifying pixels
     for imgName in fileNames:
         #for measuring time it takes to run
-        print("starting on image: " + imgName)
+        #print("starting on image: " + imgName + ".png")
         startTime = time.time()
         img = Image.open(inputDirectory + imgName + ".png")
         width, height = img.size
