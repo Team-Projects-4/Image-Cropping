@@ -1,8 +1,29 @@
 from PIL import Image
 import sys
+import time
 import os
+margin = 30
+backgroundColor = (121, 166, 210, 255)
+def removeBackground(image: Image, dim):
+    pixels = image.load()
+    width, height = dim
+    for y in range(height):
+        redBorders = [] #holds the indexes of the borders
+        prevPixelRed = False
+        currentPixelRed = False
+        for x in range(width):
+            r,g,b, _ = pixels[x, y]
+            currentPixelRed = r > 255 - margin and g < margin and b < margin #red found
+            if currentPixelRed != prevPixelRed or (currentPixelRed and x == width - 1):
+                redBorders.append(x) #new border found
+            prevPixelRed = currentPixelRed
+        print("redborders: " + str(redBorders))
+        for i in range(redBorders[0]):
+            pixels[i, y] = backgroundColor
+        for i in range(redBorders[-1], width):
+            pixels[i, y] = backgroundColor
+    return image
 def main():
-    margin = 50
     testMode = False
     if len(sys.argv) == 2:
         if sys.argv[1] == "-t":
@@ -17,6 +38,7 @@ def main():
         inputDirectory = "input/"
     outputDirectory = "output/"
     #make new directory if needed:
+    os.makedirs(inputDirectory, exist_ok=True)
     fileNames = []
     #get all files in the directory:
     for filename in os.listdir(inputDirectory):
@@ -32,6 +54,9 @@ def main():
     os.makedirs(outputDirectory, exist_ok=True)
     #change margin for tighter or more relaxed qualifying pixels
     for imgName in fileNames:
+        #for measuring time it takes to run
+        print("starting on image: " + imgName)
+        startTime = time.time()
         img = Image.open(inputDirectory + imgName + ".png")
         width, height = img.size
         pixels = img.load()
@@ -44,7 +69,7 @@ def main():
         for y in range(height):
             for x in range(width):
                 #compare RGB values:
-                r, g, b, a = pixels[x,y]
+                r, g, b, _ = pixels[x,y]
                 if (r >= 255 - margin and g <= margin and b <= margin):
                     minX = min(minX, x)
                     maxX = max(maxX, x)
@@ -60,9 +85,16 @@ def main():
 
         #left, upper, right, lower
         croparea = (minX, minY, maxX, maxY)
+        dimensions = (maxX - minX, maxY - minY)
         croppedImg = img.crop(croparea)
         #save image
-        croppedImg.save(outputDirectory + imgName + "-cropped.png")
+        fullyCropppedImg = removeBackground(croppedImg, dimensions)
+        fullyCropppedImg.save(outputDirectory + imgName + "-cropped.png")
+        #croppedImg.save(outputDirectory + imgName + "-cropped.png")
+        endTime = time.time()
+        totalTime = endTime - startTime
+        print("image cropped: \"" + outputDirectory + imgName + "\"\t", end="")
+        print(f"Task completed in {totalTime:.3f} seconds")
     
     
 
