@@ -34,10 +34,10 @@ def main():
             print("Unknown argument: \"" + sys.argv[1] + "\"")
             return
     if testMode:
-        inputDirectory = "testing/"
+        inputDirectory = "~/repos/Image-Cropping/testing/"
     else:
-        inputDirectory = "input/"
-    outputDirectory = "output/"
+        inputDirectory = "~/repos/Image-Cropping/input/"
+    outputDirectory = "~/repos/Image-Cropping/output/"
     #make new directory if needed:
     os.makedirs(inputDirectory, exist_ok=True)
     fileNames = []
