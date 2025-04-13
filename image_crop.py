@@ -48,7 +48,7 @@ def main():
             #removes the .png file extension
             fileNames.append(filename[:-4])
     if (len(fileNames) == 0):
-        print("No png files found in \"./" + inputDirectory + "\"")
+        print("No png files found in \"" + inputDirectory + "\"")
         if not testMode:
             print("Recommendation: Run with \'-t\' flag to run in test mode!")
         return
