@@ -54,7 +54,9 @@ def main():
         return
     os.makedirs(outputDirectory, exist_ok=True)
     #change margin for tighter or more relaxed qualifying pixels
+    i = 0
     for imgName in fileNames:
+        i = i + 1
         #for measuring time it takes to run
         #print("starting on image: " + imgName + ".png")
         startTime = time.time()
@@ -90,7 +92,7 @@ def main():
         croppedImg = img.crop(croparea)
         #save image
         fullyCropppedImg = removeBackground(croppedImg, dimensions)
-        fullyCropppedImg.save(outputDirectory + imgName + "-cropped.png")
+        fullyCropppedImg.save("image" + i + ".png")
         #croppedImg.save(outputDirectory + imgName + "-cropped.png")
         endTime = time.time()
         totalTime = endTime - startTime
