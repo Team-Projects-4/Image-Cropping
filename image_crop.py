@@ -92,7 +92,7 @@ def main():
         croppedImg = img.crop(croparea)
         #save image
         fullyCropppedImg = removeBackground(croppedImg, dimensions)
-        fullyCropppedImg.save("image" + str(i) + ".png")
+        fullyCropppedImg.save("/home/team4/repos/Image-Cropping/output/image" + str(i) + ".png")
         #croppedImg.save(outputDirectory + imgName + "-cropped.png")
         endTime = time.time()
         totalTime = endTime - startTime
